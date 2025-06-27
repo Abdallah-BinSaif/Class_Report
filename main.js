@@ -1,0 +1,254 @@
+const studentsResultJSON = `[
+  {
+    "studentId": "S001",
+    "name": "Alice Smith",
+    "grades": [
+      {"subject": "Math", "score": 85},
+      {"subject": "Science", "score": 90},
+      {"subject": "English", "score": 88}
+    ]
+  },
+  {
+    "studentId": "S002",
+    "name": "Bob Johnson",
+    "grades": [
+      {"subject": "Math", "score": 78},
+      {"subject": "Science", "score": 82},
+      {"subject": "English", "score": 75}
+    ]
+  },
+  {
+    "studentId": "S003",
+    "name": "Charlie Brown",
+    "grades": [
+      {"subject": "Math", "score": 92},
+      {"subject": "Science", "score": 88},
+      {"subject": "English", "score": 95}
+    ]
+  },
+  {
+    "studentId": "S004",
+    "name": "Diana Prince",
+    "grades": [
+      {"subject": "Math", "score": 65},
+      {"subject": "Science", "score": 70},
+      {"subject": "English", "score": 68}
+    ]
+  },
+  {
+    "studentId": "S005",
+    "name": "Eve Davis",
+    "grades": [
+      {"subject": "Math", "score": 70},
+      {"subject": "Science", "score": 65},
+      {"subject": "English", "score": 72}
+    ]
+  },
+  {
+    "studentId": "S006",
+    "name": "Frank White",
+    "grades": [
+      {"subject": "Math", "score": 80},
+      {"subject": "Science", "score": 75},
+      {"subject": "English", "score": 83}
+    ]
+  },
+  {
+    "studentId": "S007",
+    "name": "Grace Lee",
+    "grades": [
+      {"subject": "Math", "score": 95},
+      {"subject": "Science", "score": 92},
+      {"subject": "English", "score": 90}
+    ]
+  },
+  {
+    "studentId": "S008",
+    "name": "Henry Green",
+    "grades": [
+      {"subject": "Math", "score": 72},
+      {"subject": "Science", "score": 68},
+      {"subject": "English", "score": 70}
+    ]
+  },
+  {
+    "studentId": "S009",
+    "name": "Ivy Black",
+    "grades": [
+      {"subject": "Math", "score": 88},
+      {"subject": "Science", "score": 85},
+      {"subject": "English", "score": 87}
+    ]
+  },
+  {
+    "studentId": "S010",
+    "name": "Jack Wilson",
+    "grades": [
+      {"subject": "Math", "score": 79},
+      {"subject": "Science", "score": 73},
+      {"subject": "English", "score": 76}
+    ]
+  },
+  {
+    "studentId": "S011",
+    "name": "Karen King",
+    "grades": [
+      {"subject": "Math", "score": 91},
+      {"subject": "Science", "score": 89},
+      {"subject": "English", "score": 93}
+    ]
+  },
+  {
+    "studentId": "S012",
+    "name": "Liam Hall",
+    "grades": [
+      {"subject": "Math", "score": 60},
+      {"subject": "Science", "score": 55},
+      {"subject": "English", "score": 62}
+    ]
+  },
+  {
+    "studentId": "S013",
+    "name": "Mia Clark",
+    "grades": [
+      {"subject": "Math", "score": 84},
+      {"subject": "Science", "score": 80},
+      {"subject": "English", "score": 86}
+    ]
+  },
+  {
+    "studentId": "S014",
+    "name": "Noah Lewis",
+    "grades": [
+      {"subject": "Math", "score": 77},
+      {"subject": "Science", "score": 71},
+      {"subject": "English", "score": 74}
+    ]
+  },
+  {
+    "studentId": "S015",
+    "name": "Olivia Scott",
+    "grades": [
+      {"subject": "Math", "score": 96},
+      {"subject": "Science", "score": 94},
+      {"subject": "English", "score": 98}
+    ]
+  },
+  {
+    "studentId": "S016",
+    "name": "Peter Adams",
+    "grades": [
+      {"subject": "Math", "score": 68},
+      {"subject": "Science", "score": 63},
+      {"subject": "English", "score": 65}
+    ]
+  },
+  {
+    "studentId": "S017",
+    "name": "Quinn Baker",
+    "grades": [
+      {"subject": "Math", "score": 82},
+      {"subject": "Science", "score": 78},
+      {"subject": "English", "score": 80}
+    ]
+  },
+  {
+    "studentId": "S018",
+    "name": "Rachel Nelson",
+    "grades": [
+      {"subject": "Math", "score": 75},
+      {"subject": "Science", "score": 70},
+      {"subject": "English", "score": 73}
+    ]
+  },
+  {
+    "studentId": "S019",
+    "name": "Sam Carter",
+    "grades": [
+      {"subject": "Math", "score": 90},
+      {"subject": "Science", "score": 87},
+      {"subject": "English", "score": 91}
+    ]
+  },
+  {
+    "studentId": "S020",
+    "name": "Tina Phillips",
+    "grades": [
+      {"subject": "Math", "score": 67},
+      {"subject": "Science", "score": 60},
+      {"subject": "English", "score": 69}
+    ]
+  }
+]`
+
+const studentsResult = JSON.parse(studentsResultJSON)
+const classReport = {
+    classSummary: {
+        totalStudents: 0,
+        overallClassAverage: 0,
+        highestClassScore: 0,
+        lowestClassScore: Infinity,
+    },
+    subjectPerformance: {},
+    studentPerformance: [],
+}
+function allSubjects() {
+    const aSubjects = []
+    for(const result of studentsResult){
+        const subjects = result.grades
+        for(const sub of subjects){
+            aSubjects.push(sub)
+        }
+    }
+    return aSubjects
+}
+function summeryScore(subjects = allSubjects()) {
+    let highest = 0
+    let lowest = 100
+    let totalScore = 0
+    for(const sub of subjects){
+        if(sub.score > highest){
+            highest = sub.score
+        }
+        if(sub.score < lowest){
+            lowest = sub.score
+        }
+        totalScore += sub.score
+    }
+    return {highest, lowest, average: totalScore/subjects.length, totalScore, count:subjects.length}
+}
+
+(function overallSummary() {
+    const summary = classReport.classSummary
+    summary.totalStudents = studentsResult.length
+    summary.overallClassAverage = summeryScore().average
+    summary.highestClassScore = summeryScore().highest
+    summary.lowestClassScore = summeryScore().lowest
+})();
+
+(function subjectPerformance() {
+    const math = allSubjects().filter((item)=> item.subject === "Math")
+    const science = allSubjects().filter((item)=> item.subject === "Science")
+    const english = allSubjects().filter((item)=> item.subject === "English")
+    
+    classReport.subjectPerformance.Math = summeryScore(math)
+    classReport.subjectPerformance.Science = summeryScore(science)
+    classReport.subjectPerformance.English = summeryScore(english)
+    
+})();
+
+(function studentPerformance() {
+    for(const student of studentsResult){
+        const scores = summeryScore(student.grades)
+        const stduentSummary = {
+            studentId: student.studentId,
+            name: student.name,
+            averageScore: scores.average,
+            highestScore: scores.highest,
+            lowestScore: scores.lowest,
+            totalScore: scores.totalScore,
+        }
+        classReport.studentPerformance.push(stduentSummary)
+    }
+})();
+console.log(classReport)
